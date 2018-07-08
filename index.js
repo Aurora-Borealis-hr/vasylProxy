@@ -1,24 +1,28 @@
-const Koa = require('koa');
-const Router = require('koa-router')
-var request = require('request-promise');
+var express = require('express')
+var request = require('request-promise')
+var app = express()
+var API_URL = require('./config').API_URL
 
-const app = new Koa()
-const router = new Router()
-
-router.get('/', (ctx) => {
-  let response = request({
+app.get('/*', function (req, res) {
+    var response = request({
     method: 'GET',
-    url: 'http://127.0.0.1:3000/',
+    url: `${API_URL}${req.path}`,
+  }).then((data) => {
+    res.status(200).send(data)
+  }).catch((error) => {
+    res.status(400).send(error)
   })
-  ctx.body = response;
-});
+})
 
+app.post('/*', function (req, res) {
+    var response = request({
+    method: 'POST',
+    url: `${API_URL}${req.path}`,
+  }).then((data) => {
+    res.status(200).send(data)
+  }).catch((error) => {
+    res.status(400).send(error)
+  })
+})
 
-app
-    .use(router.routes())
-    .use(router.allowedMethods());
-
-
-module.exports = app.listen(3131);
-
-
+module.exports = app.listen(3000);
