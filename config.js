@@ -1,3 +1,3 @@
 module.exports = {
-  API_URL: process.env.NODE_ENV === 'dev' ? 'http://localhost:8080' : '',
+  API_URL: process.env.NODE_ENV === 'dev' ? 'http://localhost:8080' : 'http://172.31.40.156',
 }
