@@ -5,27 +5,17 @@ var cookieParser = require('cookie-parser')
 app.use(cookieParser())
 
 var API_URL = require('./config').API_URL
-var client = require('./elastic')
+var postToElastic = require('./elastic/helpers').post
 
 app.get('/*', function (req, res) {
-  // client.index({  
-  //   index: 'web-requests',
-  //   type: '_doc',
-  //   body: {
-  //     "userId": req.cookies.userId,
-  //     "date": Date.now(),
-  //     "user-agent": req.headers['user-agent'],
-  //     "url": req.path
-  //   }
-  // },function(err,resp,status) {
-  //     // console.log(resp);
-  // });
     var response = request({
     method: 'GET',
     url: `${API_URL}${req.path}`,
   }).then((data) => {
+    postToElastic(req, res, 200)
     res.status(200).send(data)
   }).catch((error) => {
+    postToElastic(req, res, 400)
     res.status(400).send(error)
   })
 })
