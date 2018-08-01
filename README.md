@@ -14,4 +14,4 @@
 
 ### For development
 * npm i
-* npm start dev
+* npm run dev
