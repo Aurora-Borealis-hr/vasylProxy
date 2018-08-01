@@ -1,8 +1,12 @@
-# vasylProxy
+# proxy
 
-Proxy server that routes all request to servers and then responses back to the client
 
-* Written in KOA JS,
+* routes all request to servers and then responses back to the client
+* balances load between three servers
+* logs events to Elasticsearch
+
+
+* Written in Express.js,
 * Tested with Mocha and Chai
 * Continuous integration: Circle CI
 * Containerized with Docker 
